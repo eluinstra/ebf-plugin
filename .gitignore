@@ -1,0 +1,21 @@
+# ignore hidden files/directories
+
+hooks
+.DS_Store
+*~
+\#*
+.#*
+*.jar
+*.log
+*.vgc
+/.settings
+/.classpath
+/.project
+/dependency-reduced-pom.xml
+/target
+/findbugs
+/hsqldb
+/ebms-admin.properties
+/ebms-admin.embedded.properties
+/realm.properties
+

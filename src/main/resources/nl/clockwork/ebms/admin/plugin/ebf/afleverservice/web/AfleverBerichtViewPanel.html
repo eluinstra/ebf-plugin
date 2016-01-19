@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:panel>
+	<div class="panel panel-default">
+		<div class="panel-heading">Afleverbericht</div>
+			<div class="panel-body">
+	<form class="form-horizontal" role="form">
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.kenmerk"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="kenmerk"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.berichtsoort"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="berichtsoort"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.berichtkenmerk"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="berichtkenmerk"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.aanleverkenmerk"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="aanleverkenmerk"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.tijdstempelAangeleverd"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="tijdstempelAangeleverd"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitBelanghebbendeNummer"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="identiteitBelanghebbendeNummer"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitBelanghebbendeType"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="identiteitBelanghebbendeType"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.rolBelanghebbende"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="rolBelanghebbende"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvangerNummer"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="identiteitOntvangerNummer"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvangerType"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="identiteitOntvangerType"/></p>
+			</div>
+		</div>
+		<wicket:remove>
+		<!--div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvanger"/></label>
+			<div class="col-lg-10">
+				<div>
+					<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvangerNummer"/></label>
+					<div class="col-lg-10">
+						<p class="form-control-static"><wicket:container wicket:id="identiteitOntvangerNummer"/></p>
+					</div>
+				</div>
+				<div>
+					<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvangerType"/></label>
+					<div class="col-lg-10">
+						<p class="form-control-static"><wicket:container wicket:id="identiteitOntvangerType"/></p>
+					</div>
+				</div>
+			</div>	
+		</div-->
+		</wicket:remove>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.rolOntvanger"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="rolOntvanger"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.mimeType"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="mimeType"/></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.bestandsnaam"/></label>
+			<div class="col-lg-10">
+				<p class="form-control-static"><wicket:container wicket:id="bestandsnaam"/></p>
+			</div>
+		</div>
+		<!--div class="form-group" wicket:id="inhoudFeedback">
+			<label class="col-lg-2 control-label"><wicket:message key="lbl.file"/></label>
+			<div class="col-lg-10">
+				<input type="file" class="form-control" wicket:id="file"/>
+			</div>
+		</div-->
+	</form>
+	</div>
+	</div>
+</wicket:panel>
+</body>
+</html>
