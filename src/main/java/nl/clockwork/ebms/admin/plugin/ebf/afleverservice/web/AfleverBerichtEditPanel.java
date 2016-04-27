@@ -17,6 +17,7 @@ package nl.clockwork.ebms.admin.plugin.ebf.afleverservice.web;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -31,6 +32,7 @@ import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -52,6 +54,7 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 	public AfleverBerichtEditPanel(String id)
 	{
 		super(id);
+		add(new Label("title",new ResourceModel("afleverBericht")));
 		add(new AfleverBerichtForm("form"));
 	}
 
@@ -183,7 +186,12 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 	{
 		private static final long serialVersionUID = 1L;
 		private List<FileUpload> file;
-		
+
+		public AfleverBerichtModel()
+		{
+			tijdstempelAangeleverd = Utils.getXMLGregorianCalendar(new GregorianCalendar());
+		}
+
 		public List<FileUpload> getFile()
 		{
 			return file;
