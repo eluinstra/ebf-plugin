@@ -81,46 +81,17 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 			super(id,new CompoundPropertyModel<AfleverBerichtModel>(new AfleverBerichtModel()));
 			setMultiPart(true);
 
-			TextField<String> kenmerk = new TextField<String>("kenmerk");
-			kenmerk.setLabel(new ResourceModel("lbl.kenmerk"));
-			kenmerk.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("kenmerkFeedback",kenmerk));
-
-			TextField<String> berichtsoort = new TextField<String>("berichtsoort");
-			berichtsoort.setLabel(new ResourceModel("lbl.berichtsoort"));
-			berichtsoort.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("berichtsoortFeedback",berichtsoort));
-
-			TextField<String> berichtkenmerk = new TextField<String>("berichtkenmerk");
-			berichtkenmerk.setLabel(new ResourceModel("lbl.berichtkenmerk"));
-			berichtkenmerk.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("berichtkenmerkFeedback",berichtkenmerk));
-
-			TextField<String> aanleverkenmerk = new TextField<String>("aanleverkenmerk");
-			aanleverkenmerk.setLabel(new ResourceModel("lbl.aanleverkenmerk"));
-			add(aanleverkenmerk);
-			add(new BootstrapFormComponentFeedbackBorder("aanleverkenmerkFeedback",aanleverkenmerk));
-
-			BootstrapXMLGregorianCalendarDateTimePicker tijdstempelAangeleverd = new BootstrapXMLGregorianCalendarDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss");
-			tijdstempelAangeleverd.setLabel(new ResourceModel("lbl.tijdstempelAangeleverd"));
-			tijdstempelAangeleverd.setType(BootstrapXMLGregorianCalendarDateTimePicker.Type.DATE_TIME);
-			tijdstempelAangeleverd.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverdFeedback",tijdstempelAangeleverd));
-
+			add(new BootstrapFormComponentFeedbackBorder("kenmerkFeedback",new TextField<String>("kenmerk").setLabel(new ResourceModel("lbl.kenmerk")).setRequired(true)));
+			add(new BootstrapFormComponentFeedbackBorder("berichtsoortFeedback",new TextField<String>("berichtsoort").setLabel(new ResourceModel("lbl.berichtsoort")).setRequired(true)));
+			add(new BootstrapFormComponentFeedbackBorder("berichtkenmerkFeedback",new TextField<String>("berichtkenmerk").setLabel(new ResourceModel("lbl.berichtkenmerk")).setRequired(true)));
+			add(new BootstrapFormComponentFeedbackBorder("aanleverkenmerkFeedback",new TextField<String>("aanleverkenmerk").setLabel(new ResourceModel("lbl.aanleverkenmerk"))));
+			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverdFeedback",new BootstrapXMLGregorianCalendarDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss").setType(BootstrapXMLGregorianCalendarDateTimePicker.Type.DATE_TIME).setLabel(new ResourceModel("lbl.tijdstempelAangeleverd")).setRequired(true)));
 			//add(new IdentiteitPanel("identiteitBelanghebbende",new ResourceModel("lbl.identiteitBelanghebbende"),Model.of(getModelObject().getIdentiteitBelanghebbende())));
 			add(new IdentiteitFormPanel("identiteitBelanghebbende",Model.of(getModelObject().getIdentiteitBelanghebbende())).setRequired(true));
-
-			TextField<String> rolBelanghebbende = new TextField<String>("rolBelanghebbende");
-			rolBelanghebbende.setLabel(new ResourceModel("lbl.rolBelanghebbende"));
-			rolBelanghebbende.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbendeFeedback",rolBelanghebbende));
-
+			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbendeFeedback",new TextField<String>("rolBelanghebbende").setLabel(new ResourceModel("lbl.rolBelanghebbende")).setRequired(true)));
 			//add(new IdentiteitPanel("identiteitOntvanger",new ResourceModel("lbl.identiteitOntvanger"),Model.of(getModelObject().getIdentiteitOntvanger())));
 			add(new IdentiteitFormPanel("identiteitOntvanger",Model.of(getModelObject().getIdentiteitOntvanger())).setRequired(false));
-			
-			TextField<String> rolOntvanger = new TextField<String>("rolOntvanger");
-			rolOntvanger.setLabel(new ResourceModel("lbl.rolOntvanger"));
-			add(new BootstrapFormComponentFeedbackBorder("rolOntvangerFeedback",rolOntvanger));
+			add(new BootstrapFormComponentFeedbackBorder("rolOntvangerFeedback",new TextField<String>("rolOntvanger").setLabel(new ResourceModel("lbl.rolOntvanger"))));
 
 			TextField<String> mimeType = new TextField<String>("berichtInhoud.mimeType");
 			mimeType.setLabel(new ResourceModel("lbl.mimeType"));
