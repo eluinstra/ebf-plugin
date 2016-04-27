@@ -16,7 +16,6 @@
 package nl.clockwork.ebms.admin.plugin.ebf.afleverservice.web;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -28,28 +27,23 @@ import nl.clockwork.ebms.admin.web.service.message.DataSourcesPanel;
 import nl.clockwork.ebms.common.XMLMessageBuilder;
 import nl.clockwork.ebms.model.EbMSDataSource;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public class AfleverBerichtEditPanel extends DataSourcesPanel
 {
 	private static final long serialVersionUID = 1L;
 	protected Log logger = LogFactory.getLog(this.getClass());
-	private enum IdentiteitType
-	{
-		BSN,KvK,BTW,Fi,OIN;
-	}
 
 	public AfleverBerichtEditPanel(String id)
 	{
@@ -113,49 +107,16 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 			tijdstempelAangeleverd.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverdFeedback",tijdstempelAangeleverd));
 
-			TextField<String> identiteitBelanghebbendeNummer = new TextField<String>("identiteitBelanghebbende.nummer");
-			identiteitBelanghebbendeNummer.setLabel(new ResourceModel("lbl.identiteitBelanghebbendeNummer"));
-			identiteitBelanghebbendeNummer.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("identiteitBelanghebbendeNummerFeedback",identiteitBelanghebbendeNummer));
-
-			DropDownChoice<IdentiteitType> identiteitBelanghebbendeType = new DropDownChoice<IdentiteitType>("identiteitBelanghebbende.type",Arrays.asList(IdentiteitType.values()));
-			identiteitBelanghebbendeType.setLabel(new ResourceModel("lbl.identiteitBelanghebbendeType"));
-			identiteitBelanghebbendeType.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("identiteitBelanghebbendeTypeFeedback",identiteitBelanghebbendeType));
+			//add(new IdentiteitPanel("identiteitBelanghebbende",new ResourceModel("lbl.identiteitBelanghebbende"),Model.of(getModelObject().getIdentiteitBelanghebbende())));
+			add(new IdentiteitFormPanel("identiteitBelanghebbende",Model.of(getModelObject().getIdentiteitBelanghebbende())).setRequired(true));
 
 			TextField<String> rolBelanghebbende = new TextField<String>("rolBelanghebbende");
 			rolBelanghebbende.setLabel(new ResourceModel("lbl.rolBelanghebbende"));
 			rolBelanghebbende.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbendeFeedback",rolBelanghebbende));
 
-			TextField<String> identiteitOntvangerNummer = new TextField<String>("identiteitOntvanger.nummer")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@SuppressWarnings("unchecked")
-				@Override
-				public boolean isRequired()
-				{
-					return !StringUtils.isEmpty(((DropDownChoice<IdentiteitType>)AfleverBerichtForm.this.get("identiteitOntvangerTypeFeedback:identiteitOntvangerTypeFeedback_body:identiteitOntvangerType")).getInput());
-				}
-			};
-			identiteitOntvangerNummer.setLabel(new ResourceModel("lbl.identiteitOntvangerNummer"));
-			add(new BootstrapFormComponentFeedbackBorder("identiteitOntvangerNummerFeedback",identiteitOntvangerNummer));
-
-			DropDownChoice<IdentiteitType> identiteitOntvangerType = new DropDownChoice<IdentiteitType>("identiteitOntvangerType",new PropertyModel<IdentiteitType>(this.getModelObject(),"identiteitOntvanger.type"),Arrays.asList(IdentiteitType.values()))
-			{
-				private static final long serialVersionUID = 1L;
-
-				@SuppressWarnings("unchecked")
-				@Override
-				public boolean isRequired()
-				{
-					return !StringUtils.isEmpty(((TextField<String>)AfleverBerichtForm.this.get("identiteitOntvangerNummerFeedback:identiteitOntvangerNummerFeedback_body:identiteitOntvanger.nummer")).getInput());
-				}
-			};
-			identiteitOntvangerType.setLabel(new ResourceModel("lbl.identiteitOntvangerType"));
-			identiteitOntvangerType.setNullValid(true);
-			add(new BootstrapFormComponentFeedbackBorder("identiteitOntvangerTypeFeedback",identiteitOntvangerType));
+			//add(new IdentiteitPanel("identiteitOntvanger",new ResourceModel("lbl.identiteitOntvanger"),Model.of(getModelObject().getIdentiteitOntvanger())));
+			add(new IdentiteitFormPanel("identiteitOntvanger",Model.of(getModelObject().getIdentiteitOntvanger())).setRequired(false));
 			
 			TextField<String> rolOntvanger = new TextField<String>("rolOntvanger");
 			rolOntvanger.setLabel(new ResourceModel("lbl.rolOntvanger"));
@@ -190,6 +151,8 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 		public AfleverBerichtModel()
 		{
 			tijdstempelAangeleverd = Utils.getXMLGregorianCalendar(new GregorianCalendar());
+			identiteitBelanghebbende = new IdentiteitType();
+			identiteitOntvanger = new IdentiteitType();
 		}
 
 		public List<FileUpload> getFile()
