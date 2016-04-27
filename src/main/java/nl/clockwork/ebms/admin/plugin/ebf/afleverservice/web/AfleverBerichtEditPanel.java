@@ -37,9 +37,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.ResourceModel;
 
 public class AfleverBerichtEditPanel extends DataSourcesPanel
 {
@@ -85,121 +84,51 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 			super(id,new CompoundPropertyModel<AfleverBerichtModel>(new AfleverBerichtModel()));
 			setMultiPart(true);
 
-			TextField<String> kenmerk = new TextField<String>("kenmerk")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.kenmerk",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> kenmerk = new TextField<String>("kenmerk");
+			kenmerk.setLabel(new ResourceModel("lbl.kenmerk"));
 			kenmerk.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("kenmerkFeedback",kenmerk));
 
-			TextField<String> berichtsoort = new TextField<String>("berichtsoort")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.berichtsoort",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> berichtsoort = new TextField<String>("berichtsoort");
+			berichtsoort.setLabel(new ResourceModel("lbl.berichtsoort"));
 			berichtsoort.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("berichtsoortFeedback",berichtsoort));
 
-			TextField<String> berichtkenmerk = new TextField<String>("berichtkenmerk")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.berichtkenmerk",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> berichtkenmerk = new TextField<String>("berichtkenmerk");
+			berichtkenmerk.setLabel(new ResourceModel("lbl.berichtkenmerk"));
 			berichtkenmerk.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("berichtkenmerkFeedback",berichtkenmerk));
 
-			TextField<String> aanleverkenmerk = new TextField<String>("aanleverkenmerk")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.aanleverkenmerk",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> aanleverkenmerk = new TextField<String>("aanleverkenmerk");
+			aanleverkenmerk.setLabel(new ResourceModel("lbl.aanleverkenmerk"));
 			add(aanleverkenmerk);
 			add(new BootstrapFormComponentFeedbackBorder("aanleverkenmerkFeedback",aanleverkenmerk));
 
-			BootstrapXMLGregorianCalendarDateTimePicker tijdstempelAangeleverd = new BootstrapXMLGregorianCalendarDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.tijdstempelAangeleverd",AfleverBerichtForm.this));
-				}
-			};
+			BootstrapXMLGregorianCalendarDateTimePicker tijdstempelAangeleverd = new BootstrapXMLGregorianCalendarDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss");
+			tijdstempelAangeleverd.setLabel(new ResourceModel("lbl.tijdstempelAangeleverd"));
 			tijdstempelAangeleverd.setType(BootstrapXMLGregorianCalendarDateTimePicker.Type.DATE_TIME);
 			tijdstempelAangeleverd.setRequired(true);
 			add(tijdstempelAangeleverd);
 
-			TextField<String> identiteitBelanghebbendeNummer = new TextField<String>("identiteitBelanghebbendeNummer",new PropertyModel<String>(this.getModelObject(),"identiteitBelanghebbende.nummer"))
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.identiteitBelanghebbendeNummer",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> identiteitBelanghebbendeNummer = new TextField<String>("identiteitBelanghebbende.nummer");
+			identiteitBelanghebbendeNummer.setLabel(new ResourceModel("lbl.identiteitBelanghebbendeNummer"));
 			identiteitBelanghebbendeNummer.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("identiteitBelanghebbendeNummerFeedback",identiteitBelanghebbendeNummer));
 
-			DropDownChoice<IdentiteitType> identiteitBelanghebbendeType = new DropDownChoice<IdentiteitType>("identiteitBelanghebbendeType",new PropertyModel<IdentiteitType>(this.getModelObject(),"identiteitBelanghebbende.type"),Arrays.asList(IdentiteitType.values()))
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.identiteitBelanghebbendeType",AfleverBerichtForm.this));
-				}
-			};
+			DropDownChoice<IdentiteitType> identiteitBelanghebbendeType = new DropDownChoice<IdentiteitType>("identiteitBelanghebbende.type",Arrays.asList(IdentiteitType.values()));
+			identiteitBelanghebbendeType.setLabel(new ResourceModel("lbl.identiteitBelanghebbendeType"));
 			identiteitBelanghebbendeType.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("identiteitBelanghebbendeTypeFeedback",identiteitBelanghebbendeType));
 
-			TextField<String> rolBelanghebbende = new TextField<String>("rolBelanghebbende")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.rolBelanghebbende",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> rolBelanghebbende = new TextField<String>("rolBelanghebbende");
+			rolBelanghebbende.setLabel(new ResourceModel("lbl.rolBelanghebbende"));
 			rolBelanghebbende.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbendeFeedback",rolBelanghebbende));
 
-			TextField<String> identiteitOntvangerNummer = new TextField<String>("identiteitOntvangerNummer",new PropertyModel<String>(this.getModelObject(),"identiteitOntvanger.nummer"))
+			TextField<String> identiteitOntvangerNummer = new TextField<String>("identiteitOntvanger.nummer")
 			{
 				private static final long serialVersionUID = 1L;
 
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.identiteitOntvangerNummer",AfleverBerichtForm.this));
-				}
-				
 				@SuppressWarnings("unchecked")
 				@Override
 				public boolean isRequired()
@@ -207,76 +136,40 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 					return !StringUtils.isEmpty(((DropDownChoice<IdentiteitType>)AfleverBerichtForm.this.get("identiteitOntvangerTypeFeedback:identiteitOntvangerTypeFeedback_body:identiteitOntvangerType")).getInput());
 				}
 			};
+			identiteitOntvangerNummer.setLabel(new ResourceModel("lbl.identiteitOntvangerNummer"));
 			add(new BootstrapFormComponentFeedbackBorder("identiteitOntvangerNummerFeedback",identiteitOntvangerNummer));
 
 			DropDownChoice<IdentiteitType> identiteitOntvangerType = new DropDownChoice<IdentiteitType>("identiteitOntvangerType",new PropertyModel<IdentiteitType>(this.getModelObject(),"identiteitOntvanger.type"),Arrays.asList(IdentiteitType.values()))
 			{
 				private static final long serialVersionUID = 1L;
 
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.identiteitOntvangerType",AfleverBerichtForm.this));
-				}
-				
 				@SuppressWarnings("unchecked")
 				@Override
 				public boolean isRequired()
 				{
-					return !StringUtils.isEmpty(((TextField<String>)AfleverBerichtForm.this.get("identiteitOntvangerNummerFeedback:identiteitOntvangerNummerFeedback_body:identiteitOntvangerNummer")).getInput());
+					return !StringUtils.isEmpty(((TextField<String>)AfleverBerichtForm.this.get("identiteitOntvangerNummerFeedback:identiteitOntvangerNummerFeedback_body:identiteitOntvanger.nummer")).getInput());
 				}
 			};
+			identiteitOntvangerType.setLabel(new ResourceModel("lbl.identiteitOntvangerType"));
 			identiteitOntvangerType.setNullValid(true);
 			add(new BootstrapFormComponentFeedbackBorder("identiteitOntvangerTypeFeedback",identiteitOntvangerType));
 			
-			TextField<String> rolOntvanger = new TextField<String>("rolOntvanger")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.rolOntvanger",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> rolOntvanger = new TextField<String>("rolOntvanger");
+			rolOntvanger.setLabel(new ResourceModel("lbl.rolOntvanger"));
 			add(new BootstrapFormComponentFeedbackBorder("rolOntvangerFeedback",rolOntvanger));
 
-			TextField<String> mimeType = new TextField<String>("mimeType",new PropertyModel<String>(this.getModelObject(),"berichtInhoud.mimeType"))
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.mimeType",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> mimeType = new TextField<String>("berichtInhoud.mimeType");
+			mimeType.setLabel(new ResourceModel("lbl.mimeType"));
 			mimeType.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("mimeTypeFeedback",mimeType));
 
-			TextField<String> bestandsnaam = new TextField<String>("bestandsnaam",new PropertyModel<String>(this.getModelObject(),"berichtInhoud.bestandsnaam"))
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.bestandsnaam",AfleverBerichtForm.this));
-				}
-			};
+			TextField<String> bestandsnaam = new TextField<String>("berichtInhoud.bestandsnaam");
+			bestandsnaam.setLabel(new ResourceModel("lbl.bestandsnaam"));
 			bestandsnaam.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("bestandsnaamFeedback",bestandsnaam));
 
-			FileUploadField inhoud = new FileUploadField("file")
-			{
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public IModel<String> getLabel()
-				{
-					return Model.of(getLocalizer().getString("lbl.inhoud",AfleverBerichtForm.this));
-				}
-			};
+			FileUploadField inhoud = new FileUploadField("file");
+			inhoud.setLabel(new ResourceModel("lbl.inhoud"));
 			inhoud.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("inhoudFeedback",inhoud));
 

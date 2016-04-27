@@ -145,7 +145,7 @@
 							<schemaDirectory>${project.basedir}/src/main/resources/nl/clockwork/ebms/admin/plugin/ebf/afleverservice/xsd/</schemaDirectory>
 							<schemaFiles>Afleveren_ebMS_2.0_v1.1.xsd</schemaFiles>
 							<bindingDirectory>${project.basedir}/src/main/resources/nl/clockwork/ebms/admin/plugin/ebf/afleverservice/xsd/</bindingDirectory>
-							<bindingFiles>Afleveren_ebMS_2.0_v1.1.xjb</bindingFiles>
+							<bindingFiles>ebf_2.0_v1.1.xjb</bindingFiles>
 							<staleFile>${project.build.directory}/jaxb2/.Afleveren_ebMS_2.0_v1.1.StaleFlag</staleFile>
 							<clearOutputDir>false</clearOutputDir>
 							<verbose>false</verbose>
@@ -160,7 +160,7 @@
 							<schemaDirectory>${project.basedir}/src/main/resources/nl/clockwork/ebms/admin/plugin/ebf/afleverservice/xsd/</schemaDirectory>
 							<schemaFiles>Afleveren_bevestiging_ebMS_2.0_v1.1.xsd</schemaFiles>
 							<bindingDirectory>${project.basedir}/src/main/resources/nl/clockwork/ebms/admin/plugin/ebf/afleverservice/xsd/</bindingDirectory>
-							<bindingFiles>Afleveren_bevestiging_ebMS_2.0_v1.1.xjb</bindingFiles>
+							<bindingFiles>ebf_2.0_v1.1.xjb</bindingFiles>
 							<staleFile>${project.build.directory}/jaxb2/.Afleveren_ebMS_2.0_v1.1_.StaleFlag</staleFile>
 							<clearOutputDir>false</clearOutputDir>
 							<verbose>false</verbose>
