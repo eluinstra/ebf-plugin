@@ -108,7 +108,7 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 			tijdstempelAangeleverd.setLabel(new ResourceModel("lbl.tijdstempelAangeleverd"));
 			tijdstempelAangeleverd.setType(BootstrapXMLGregorianCalendarDateTimePicker.Type.DATE_TIME);
 			tijdstempelAangeleverd.setRequired(true);
-			add(tijdstempelAangeleverd);
+			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverdFeedback",tijdstempelAangeleverd));
 
 			TextField<String> identiteitBelanghebbendeNummer = new TextField<String>("identiteitBelanghebbende.nummer");
 			identiteitBelanghebbendeNummer.setLabel(new ResourceModel("lbl.identiteitBelanghebbendeNummer"));
