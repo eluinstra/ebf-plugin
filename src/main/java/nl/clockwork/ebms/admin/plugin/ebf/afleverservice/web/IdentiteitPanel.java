@@ -5,9 +5,9 @@ import java.util.Arrays;
 import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -21,33 +21,62 @@ public class IdentiteitPanel extends Panel
 		BSN,KvK,BTW,Fi,OIN;
 	}
 	private static final long serialVersionUID = 1L;
+	private boolean required;
 
-	public IdentiteitPanel(String id, IModel<String> title, IModel<IdentiteitType> model)
+	public IdentiteitPanel(String id, IModel<IdentiteitType> model)
 	{
 		super(id,model);
-		add(new IdentiteitTypeForm("form",title,model));
+		add(new IdentiteitTypeForm("form",model));
 	}
 
 	public class IdentiteitTypeForm extends Form<IdentiteitType>
 	{
 		private static final long serialVersionUID = 1L;
 		
-		public IdentiteitTypeForm(String id, IModel<String> title, IModel<IdentiteitType> model)
+		public IdentiteitTypeForm(String id, IModel<IdentiteitType> model)
 		{
 			super(id,new CompoundPropertyModel<IdentiteitType>(model));
 
-			add(new Label("title",title));
-
-			TextField<String> nummer = new TextField<String>("nummer");
-			nummer.setLabel(new ResourceModel("lbl.nummer"));
-			nummer.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("nummerFeedback",nummer));
-
-			DropDownChoice<Type> type = new DropDownChoice<Type>("type",Arrays.asList(Type.values()));
-			type.setLabel(new ResourceModel("lbl.type"));
-			type.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("typeFeedback",type));
+			add(new BootstrapFormComponentFeedbackBorder("nummerFeedback",createNummerTextField()));
+			add(new BootstrapFormComponentFeedbackBorder("typeFeedback",createTypeChoice()));
 		}
 
+		private FormComponent<String> createNummerTextField()
+		{
+			TextField<String> result = new TextField<String>("nummer")
+			{
+				private static final long serialVersionUID = 1L;
+				
+				@Override
+				public boolean isRequired()
+				{
+					return required;
+				}
+			};
+			result.setLabel(new ResourceModel("lbl.nummer"));
+			return result;
+		}
+
+		private DropDownChoice<Type> createTypeChoice()
+		{
+			DropDownChoice<Type> result = new DropDownChoice<Type>("type",Arrays.asList(Type.values()))
+			{
+				private static final long serialVersionUID = 1L;
+				
+				@Override
+				public boolean isRequired()
+				{
+					return required;
+				}
+			};
+			result.setLabel(new ResourceModel("lbl.type"));
+			return result;
+		}
+	}
+
+	public IdentiteitPanel setRequired(boolean required)
+	{
+		this.required = required;
+		return this;
 	}
 }

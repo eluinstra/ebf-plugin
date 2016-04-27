@@ -19,9 +19,6 @@ public class IdentiteitFormPanel extends FormComponentPanel<IdentiteitType>
 		BSN,KvK,BTW,Fi,OIN;
 	}
 	private static final long serialVersionUID = 1L;
-	private IdentiteitType identiteitType;
-	TextField<String> nummer;
-	DropDownChoice<Type> type;
 
 	public IdentiteitFormPanel(String id)
 	{
@@ -32,7 +29,7 @@ public class IdentiteitFormPanel extends FormComponentPanel<IdentiteitType>
 	{
 		super(id,new CompoundPropertyModel<IdentiteitType>(model));
 
-		nummer = new TextField<String>("nummer")
+		TextField<String> nummer = new TextField<String>("nummer")
 		{
 			private static final long serialVersionUID = 1L;
 	
@@ -45,7 +42,7 @@ public class IdentiteitFormPanel extends FormComponentPanel<IdentiteitType>
 		nummer.setLabel(new ResourceModel("lbl.nummer"));
 		add(new BootstrapFormComponentFeedbackBorder("nummerFeedback",nummer));
 
-		type = new DropDownChoice<Type>("type",Arrays.asList(Type.values()))
+		DropDownChoice<Type> type = new DropDownChoice<Type>("type",Arrays.asList(Type.values()))
 		{
 			private static final long serialVersionUID = 1L;
 	
@@ -69,26 +66,7 @@ public class IdentiteitFormPanel extends FormComponentPanel<IdentiteitType>
 	protected void convertInput()
 	{
 		if (getModelObject() == null) setModelObject(new IdentiteitType());
-		identiteitType = getModelObject();
-		identiteitType.setNummer(nummer.getConvertedInput());
-		identiteitType.setType(type.getConvertedInput() != null ? type.getConvertedInput().toString(): null);
-		setConvertedInput(identiteitType);
+		setConvertedInput(getModelObject());
 	}
 	
-	@Override
-	protected void onBeforeRender()
-	{
-		identiteitType = getModelObject();
-		super.onBeforeRender();
-	}
-	
-	public IdentiteitType getIdentiteitType()
-	{
-		return identiteitType;
-	}
-
-	public void setIdentiteitType(IdentiteitType identiteitType)
-	{
-		this.identiteitType = identiteitType;
-	}
 }

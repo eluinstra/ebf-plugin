@@ -37,7 +37,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class AfleverBerichtEditPanel extends DataSourcesPanel
@@ -86,11 +86,11 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 			add(new BootstrapFormComponentFeedbackBorder("berichtkenmerkFeedback",new TextField<String>("berichtkenmerk").setLabel(new ResourceModel("lbl.berichtkenmerk")).setRequired(true)));
 			add(new BootstrapFormComponentFeedbackBorder("aanleverkenmerkFeedback",new TextField<String>("aanleverkenmerk").setLabel(new ResourceModel("lbl.aanleverkenmerk"))));
 			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverdFeedback",new BootstrapXMLGregorianCalendarDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss").setType(BootstrapXMLGregorianCalendarDateTimePicker.Type.DATE_TIME).setLabel(new ResourceModel("lbl.tijdstempelAangeleverd")).setRequired(true)));
-			//add(new IdentiteitPanel("identiteitBelanghebbende",new ResourceModel("lbl.identiteitBelanghebbende"),Model.of(getModelObject().getIdentiteitBelanghebbende())));
-			add(new IdentiteitFormPanel("identiteitBelanghebbende",Model.of(getModelObject().getIdentiteitBelanghebbende())).setRequired(true));
+			//add(new IdentiteitPanel("identiteitBelanghebbende",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitBelanghebbende")).setRequired(true));
+			add(new IdentiteitFormPanel("identiteitBelanghebbende",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitBelanghebbende")).setRequired(true));
 			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbendeFeedback",new TextField<String>("rolBelanghebbende").setLabel(new ResourceModel("lbl.rolBelanghebbende")).setRequired(true)));
-			//add(new IdentiteitPanel("identiteitOntvanger",new ResourceModel("lbl.identiteitOntvanger"),Model.of(getModelObject().getIdentiteitOntvanger())));
-			add(new IdentiteitFormPanel("identiteitOntvanger",Model.of(getModelObject().getIdentiteitOntvanger())).setRequired(false));
+			//add(new IdentiteitPanel("identiteitOntvanger",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitOntvanger")));
+			add(new IdentiteitFormPanel("identiteitOntvanger",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitOntvanger")));
 			add(new BootstrapFormComponentFeedbackBorder("rolOntvangerFeedback",new TextField<String>("rolOntvanger").setLabel(new ResourceModel("lbl.rolOntvanger"))));
 
 			TextField<String> mimeType = new TextField<String>("berichtInhoud.mimeType");
@@ -122,8 +122,6 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 		public AfleverBerichtModel()
 		{
 			tijdstempelAangeleverd = Utils.getXMLGregorianCalendar(new GregorianCalendar());
-			identiteitBelanghebbende = new IdentiteitType();
-			identiteitOntvanger = new IdentiteitType();
 		}
 
 		public List<FileUpload> getFile()
