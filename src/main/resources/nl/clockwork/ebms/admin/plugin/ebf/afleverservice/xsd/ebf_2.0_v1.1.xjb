@@ -1,5 +1,6 @@
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0">
 	<globalBindings>
 		<serializable uid="1"/>
+		<javaType name="java.util.Date" xmlType="xsd:dateTime" parseMethod="nl.clockwork.ebms.jaxb.EbMSDateTimeConverter.parseDateTime" printMethod="nl.clockwork.ebms.jaxb.EbMSDateTimeConverter.printDateTime" />
 	</globalBindings>
 </bindings>

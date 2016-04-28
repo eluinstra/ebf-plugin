@@ -26,11 +26,16 @@ import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.IGenericComponent;
+import org.apache.wicket.datetime.StyleDateConverter;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-public class AfleverBerichtViewPanel extends Panel
+public class AfleverBerichtViewPanel extends Panel implements IGenericComponent<AfleverBericht>
 {
 	private static final long serialVersionUID = 1L;
 	protected Log logger = LogFactory.getLog(this.getClass());
@@ -42,20 +47,45 @@ public class AfleverBerichtViewPanel extends Panel
 		super(id);
 		EbMSAttachment attachment = attachments.get(0);
 		attachment = ebMSDAO.findAttachment(attachment.getMessage().getMessageId(),attachment.getMessage().getMessageNr(),attachment.getContentId());
-		AfleverBericht afleverBericht = XMLMessageBuilder.getInstance(AfleverBericht.class).handle(new String(attachment.getContent()));
-		add(new Label("kenmerk",afleverBericht.getKenmerk()));
-		add(new Label("berichtsoort",afleverBericht.getBerichtsoort()));
-		add(new Label("berichtkenmerk",afleverBericht.getBerichtkenmerk()));
-		add(new Label("aanleverkenmerk",afleverBericht.getAanleverkenmerk()));
-		add(new Label("tijdstempelAangeleverd",afleverBericht.getTijdstempelAangeleverd().toXMLFormat()));
-		add(new Label("identiteitBelanghebbendeNummer",afleverBericht.getIdentiteitBelanghebbende().getNummer()));
-		add(new Label("identiteitBelanghebbendeType",afleverBericht.getIdentiteitBelanghebbende().getType()));
-		add(new Label("rolBelanghebbende",afleverBericht.getRolBelanghebbende()));
-		add(new Label("identiteitOntvangerNummer",afleverBericht.getIdentiteitOntvanger() == null ? "" : afleverBericht.getIdentiteitOntvanger().getNummer()));
-		add(new Label("identiteitOntvangerType",afleverBericht.getIdentiteitOntvanger() == null ? "" : afleverBericht.getIdentiteitOntvanger().getType()));
-		add(new Label("rolOntvanger",afleverBericht.getKenmerk()));
-		add(new Label("mimeType",afleverBericht.getBerichtInhoud().getMimeType()));
-		add(new Label("bestandsnaam",afleverBericht.getBerichtInhoud().getBestandsnaam()));
+		setModel(new CompoundPropertyModel<AfleverBericht>(XMLMessageBuilder.getInstance(AfleverBericht.class).handle(new String(attachment.getContent()))));
+		add(new Label("kenmerk"));
+		add(new Label("berichtsoort"));
+		add(new Label("berichtkenmerk"));
+		add(new Label("aanleverkenmerk"));
+		add(new DateLabel("tijdstempelAangeleverd",new StyleDateConverter(true)));
+		add(new Label("identiteitBelanghebbende.nummer"));
+		add(new Label("identiteitBelanghebbende.type"));
+		add(new Label("rolBelanghebbende"));
+		add(new Label("identiteitOntvanger.nummer"));
+		add(new Label("identiteitOntvanger.type"));
+		add(new Label("rolOntvanger"));
+		add(new Label("berichtInhoud.mimeType"));
+		add(new Label("berichtInhoud.bestandsnaam"));
+	}
+
+	@Override
+	public AfleverBericht getModelObject()
+	{
+		return (AfleverBericht)getDefaultModelObject();
+	}
+
+	@Override
+	public void setModelObject(AfleverBericht object)
+	{
+		setDefaultModelObject(object);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IModel<AfleverBericht> getModel()
+	{
+		return (IModel<AfleverBericht>)getDefaultModel();
+	}
+
+	@Override
+	public void setModel(IModel<AfleverBericht> model)
+	{
+		setDefaultModel(model);
 	}
 
 }

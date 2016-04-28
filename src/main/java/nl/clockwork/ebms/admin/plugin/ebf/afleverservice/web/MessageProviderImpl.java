@@ -39,7 +39,7 @@ public class MessageProviderImpl extends MessageProvider
 			@Override
 			public DataSourcesPanel getPanel(String id)
 			{
-				return new AfleverBerichtEditPanel(id);
+				return new AfleverBerichtEditPanelX(id);
 			}
 		});
 		return result;

@@ -38,35 +38,23 @@
 						<span wicket:id="tijdstempelAangeleverd"/>
 					</div>
 				</div>
-				<div class="form-group" wicket:id="identiteitBelanghebbende.nummer.feedback">
-					<label wicket:for="identiteitBelanghebbende.nummer" class="col-lg-2 control-label"><wicket:label/></label>
+				<div class="form-group">
+					<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitBelanghebbende"/></label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" wicket:id="identiteitBelanghebbende.nummer"/>
+						<wicket:container wicket:id="identiteitBelanghebbende"/>
 					</div>
 				</div>
-				<div class="form-group" wicket:id="identiteitBelanghebbende.type.feedback">
-					<label wicket:for="identiteitBelanghebbende.type" class="col-lg-2 control-label"><wicket:label/></label>
- 					<div class="col-lg-10">
-						<select class="form-control" wicket:id="identiteitBelanghebbende.type"/>
- 					</div>
- 				</div>
 				<div class="form-group" wicket:id="rolBelanghebbende.feedback">
 					<label wicket:for="rolBelanghebbende" class="col-lg-2 control-label"><wicket:label/></label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" wicket:id="rolBelanghebbende"/>
 					</div>
 				</div>
-				<div class="form-group" wicket:id="identiteitOntvanger.nummer.feedback">
-					<label wicket:for="identiteitOntvanger.nummer" class="col-lg-2 control-label"><wicket:label/></label>
+				<div class="form-group">
+					<label class="col-lg-2 control-label"><wicket:message key="lbl.identiteitOntvanger"/></label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" wicket:id="identiteitOntvanger.nummer"/>
-					</div>
-				</div>
-				<div class="form-group" wicket:id="identiteitOntvanger.type.feedback">
-					<label wicket:for="identiteitOntvanger.type" class="col-lg-2 control-label"><wicket:label/></label>
-					<div class="col-lg-10">
-						<select class="form-control" wicket:id="identiteitOntvanger.type"/>
-					</div>
+						<wicket:container wicket:id="identiteitOntvanger"/>
+					</div>	
 				</div>
 				<div class="form-group" wicket:id="rolOntvanger.feedback">
 					<label wicket:for="rolOntvanger" class="col-lg-2 control-label"><wicket:label/></label>
@@ -74,22 +62,27 @@
 						<input type="text" class="form-control" wicket:id="rolOntvanger"/>
 					</div>
 				</div>
-				<div class="form-group" wicket:id="mimeType.feedback">
-					<label wicket:for="berichtInhoud.mimeType" class="col-lg-2 control-label"><wicket:label/></label>
+				<div class="form-group">
+					<label class="col-lg-2 control-label"><wicket:message key="lbl.berichtInhoud"/></label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" wicket:id="berichtInhoud.mimeType"/>
-					</div>
-				</div>
-				<div class="form-group" wicket:id="bestandsnaam.feedback">
-					<label wicket:for="berichtInhoud.bestandsnaam" class="col-lg-2 control-label"><wicket:label/></label>
-					<div class="col-lg-10">
-						<input type="text" class="form-control" wicket:id="berichtInhoud.bestandsnaam"/>
-					</div>
-				</div>
-				<div class="form-group" wicket:id="inhoud.feedback">
-					<label wicket:for="file" class="col-lg-2 control-label"><wicket:label/></label>
-					<div class="col-lg-10">
-						<input type="file" class="form-control" wicket:id="file"/>
+						<div class="form-group" wicket:id="mimeType.feedback">
+							<label wicket:for="berichtInhoud.mimeType" class="col-lg-2 control-label"><wicket:label/></label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" wicket:id="berichtInhoud.mimeType"/>
+							</div>
+						</div>
+						<div class="form-group" wicket:id="bestandsnaam.feedback">
+							<label wicket:for="berichtInhoud.bestandsnaam" class="col-lg-2 control-label"><wicket:label/></label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" wicket:id="berichtInhoud.bestandsnaam"/>
+							</div>
+						</div>
+						<div class="form-group" wicket:id="inhoud.feedback">
+							<label wicket:for="file" class="col-lg-2 control-label"><wicket:label/></label>
+							<div class="col-lg-10">
+								<input type="file" class="form-control" wicket:id="file"/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</form>
