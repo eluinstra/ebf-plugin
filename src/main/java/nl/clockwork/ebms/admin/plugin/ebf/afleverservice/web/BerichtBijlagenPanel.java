@@ -34,14 +34,14 @@ import org.apache.wicket.util.io.IClusterable;
 
 public class BerichtBijlagenPanel extends Panel
 {
-	private class BerichtInhoudListView extends ListView<BerichtInhoudType>
+	private class BerichtBijlageListView extends ListView<BerichtInhoudType>
 	{
-		private BerichtInhoudenForm berichtInhoudenForm;
+		private BerichtBijlagenForm berichtBijlagenForm;
 
-		public BerichtInhoudListView(String id, BerichtInhoudenForm berichtInhoudenForm)
+		public BerichtBijlageListView(String id, BerichtBijlagenForm berichtBijlagenForm)
 		{
 			super(id);
-			this.berichtInhoudenForm = berichtInhoudenForm;
+			this.berichtBijlagenForm = berichtBijlagenForm;
 			setOutputMarkupId(true);
 		}
 
@@ -53,15 +53,15 @@ public class BerichtBijlagenPanel extends Panel
 			item.setModel(new CompoundPropertyModel<BerichtInhoudType>(item.getModelObject()));
 			item.add(new Label("bestandsnaam"));
 			item.add(new Label("mimeType"));
-			item.add(new AjaxButton("remove",new ResourceModel("cmd.remove"),berichtInhoudenForm)
+			item.add(new AjaxButton("remove",new ResourceModel("cmd.remove"),berichtBijlagenForm)
 			{
 				private static final long serialVersionUID = 1L;
 				
 				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 				{
-					berichtInhoudenForm.getModelObject().getBerichtBijlagen().getBijlage().remove(item.getModelObject());
-					target.add(berichtInhoudenForm);
+					berichtBijlagenForm.getModelObject().getBerichtBijlagen().getBijlage().remove(item.getModelObject());
+					target.add(berichtBijlagenForm);
 				}
 			});
 		}
@@ -72,18 +72,18 @@ public class BerichtBijlagenPanel extends Panel
 	public BerichtBijlagenPanel(String id, BerichtBijlagenType berichtBijlagen)
 	{
 		super(id);
-		add(new BerichtInhoudenForm("form",berichtBijlagen));
+		add(new BerichtBijlagenForm("form",berichtBijlagen));
 	}
 	
-	public class BerichtInhoudenForm extends Form<BerichtInhoudenModel>
+	public class BerichtBijlagenForm extends Form<BerichtInhoudenModel>
 	{
 		private static final long serialVersionUID = 1L;
 
-		public BerichtInhoudenForm(String id, final BerichtBijlagenType berichtBijlagen)
+		public BerichtBijlagenForm(String id, final BerichtBijlagenType berichtBijlagen)
 		{
 			super(id,new CompoundPropertyModel<BerichtInhoudenModel>(new BerichtInhoudenModel(berichtBijlagen)));
-			add(new BerichtInhoudListView("berichtBijlagen.bijlage",BerichtInhoudenForm.this));
-			final ModalWindow berichtInhoudModalWindow = new BerichtInhoudModalWindow("berichtInhoudModelWindow",BerichtInhoudenForm.this)
+			add(new BerichtBijlageListView("berichtBijlagen.bijlage",BerichtBijlagenForm.this));
+			final ModalWindow berichtInhoudModalWindow = new BerichtInhoudModalWindow("berichtInhoudModelWindow",BerichtBijlagenForm.this)
 			{
 				private static final long serialVersionUID = 1L;
 
@@ -115,7 +115,7 @@ public class BerichtBijlagenPanel extends Panel
 	
 	public BerichtBijlagenType getBerichtInhouden()
 	{
-		return ((BerichtInhoudenForm)this.get("form")).getModelObject().getBerichtBijlagen();
+		return ((BerichtBijlagenForm)this.get("form")).getModelObject().getBerichtBijlagen();
 	}
 
 	public static class BerichtInhoudenModel implements IClusterable

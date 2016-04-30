@@ -107,7 +107,7 @@ public class BerichtInhoudPanel extends Panel
 	
 	public BerichtInhoudType getBerichtInhoud()
 	{
-		return ((BerichtInhoudenForm)this.get("form")).getModelObject().getBerichtInhoud();
+		return ((BerichtBijlagenForm)this.get("form")).getModelObject().getBerichtInhoud();
 	}
 
 	public static class BerichtInhoudModel implements IClusterable
