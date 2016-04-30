@@ -28,6 +28,7 @@ import nl.clockwork.ebms.admin.web.service.message.DataSourcesPanel;
 import nl.clockwork.ebms.common.XMLMessageBuilder;
 import nl.clockwork.ebms.model.EbMSDataSource;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtBijlagenType;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
 
 import org.apache.commons.logging.Log;
@@ -107,6 +108,7 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 			inhoud.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("inhoud.feedback",inhoud));
 
+			add(new BerichtBijlagenPanel("berichtBijlagen",getModelObject().getBerichtBijlagen()));
 			//BerichtBijlagenType berichtBijlagen;
 			//FoutLijstType foutLijst;
 		}
@@ -121,6 +123,7 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 		public AfleverBerichtModel()
 		{
 			tijdstempelAangeleverd = new Date();
+			berichtBijlagen = new BerichtBijlagenType();
 		}
 
 		public List<FileUpload> getFile()
