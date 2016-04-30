@@ -62,29 +62,7 @@
 						<input type="text" class="form-control" wicket:id="rolOntvanger"/>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-lg-2 control-label"><wicket:message key="lbl.berichtInhoud"/></label>
-					<div class="col-lg-10">
-						<div class="form-group" wicket:id="mimeType.feedback">
-							<label wicket:for="berichtInhoud.mimeType" class="col-lg-2 control-label"><wicket:label/></label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" wicket:id="berichtInhoud.mimeType"/>
-							</div>
-						</div>
-						<div class="form-group" wicket:id="bestandsnaam.feedback">
-							<label wicket:for="berichtInhoud.bestandsnaam" class="col-lg-2 control-label"><wicket:label/></label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" wicket:id="berichtInhoud.bestandsnaam"/>
-							</div>
-						</div>
-						<div class="form-group" wicket:id="inhoud.feedback">
-							<label wicket:for="file" class="col-lg-2 control-label"><wicket:label/></label>
-							<div class="col-lg-10">
-								<input type="file" class="form-control" wicket:id="file"/>
-							</div>
-						</div>
-					</div>
-				</div>
+				<wicket:container wicket:id="berichtInhoud"/>
 				<wicket:container wicket:id="berichtBijlagen"/>
 			</form>
 		</div>

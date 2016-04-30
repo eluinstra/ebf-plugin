@@ -15,9 +15,6 @@
  */
 package nl.clockwork.ebms.admin.plugin.ebf.afleverservice.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtInhoudType;
 
 import org.apache.commons.logging.Log;
@@ -27,45 +24,48 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.util.io.IClusterable;
 
 public class BerichtInhoudPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
 	protected Log logger = LogFactory.getLog(this.getClass());
 
-	public BerichtInhoudPanel(String id)
+	public BerichtInhoudPanel(String id, IModel<BerichtInhoudType> model)
 	{
 		super(id);
-		add(new BerichtInhoudForm("form"));
+		add(new BerichtInhoudForm("form",model));
 	}
 	
 	public class BerichtInhoudForm extends Form<BerichtInhoudType>
 	{
 		private static final long serialVersionUID = 1L;
 
-		public BerichtInhoudForm(String id)
+		public BerichtInhoudForm(String id, IModel<BerichtInhoudType> model)
 		{
-			super(id,new CompoundPropertyModel<BerichtInhoudType>(new BerichtInhoudType()));
+			super(id,new CompoundPropertyModel<BerichtInhoudType>(model));
 			add(new Label("bestandsnaam"));
 			add(new Label("mimeType"));
-			add(new AjaxButton("remove",new ResourceModel("cmd.remove"),berichtInhoudForm)
+			add(new AjaxButton("remove",new ResourceModel("cmd.remove"),BerichtInhoudForm.this)
 			{
 				private static final long serialVersionUID = 1L;
 				
 				@Override
+				public boolean isVisible()
+				{
+					return BerichtInhoudForm.this.getModelObject() != null && BerichtInhoudForm.this.getModelObject().getBestandsnaam() != null;
+				}
+
+				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
 				{
-					berichtInhoudForm.getModelObject().getBerichtInhouden().remove(item.getModelObject());
-					target.add(berichtInhoudForm);
+					BerichtInhoudForm.this.setModelObject(null);
+					target.add(BerichtInhoudForm.this);
 				}
 			});
-
 			final ModalWindow berichtInhoudModalWindow = new BerichtInhoudModalWindow("berichtInhoudModelWindow",BerichtInhoudForm.this)
 			{
 				private static final long serialVersionUID = 1L;
@@ -92,7 +92,7 @@ public class BerichtInhoudPanel extends Panel
 				@Override
 				public boolean isVisible()
 				{
-					return BerichtInhoudForm.this.getModelObject() != null;
+					return BerichtInhoudForm.this.getModelObject() == null || BerichtInhoudForm.this.getModelObject().getBestandsnaam() == null;
 				}
 
 				@Override
@@ -105,20 +105,4 @@ public class BerichtInhoudPanel extends Panel
 		}
 	}
 	
-	public BerichtInhoudType getBerichtInhoud()
-	{
-		return ((BerichtBijlagenForm)this.get("form")).getModelObject().getBerichtInhoud();
-	}
-
-	public static class BerichtInhoudModel implements IClusterable
-	{
-		private static final long serialVersionUID = 1L;
-		private BerichtInhoudType berichtInhoud = new BerichtInhoudType();
-
-		public BerichtInhoudType getBerichtInhoud()
-		{
-			return berichtInhoud;
-		}
-	}
-
 }

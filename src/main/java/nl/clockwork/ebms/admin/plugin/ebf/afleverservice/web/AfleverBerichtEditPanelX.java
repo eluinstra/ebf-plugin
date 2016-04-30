@@ -29,6 +29,7 @@ import nl.clockwork.ebms.common.XMLMessageBuilder;
 import nl.clockwork.ebms.model.EbMSDataSource;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtBijlagenType;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtInhoudType;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
 
 import org.apache.commons.logging.Log;
@@ -37,7 +38,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
@@ -61,8 +61,6 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 		try
 		{
 			AfleverBerichtModel afleverBericht = ((AfleverBerichtForm)get("form")).getModelObject();
-			for (FileUpload file : afleverBericht.getFile())
-				afleverBericht.getBerichtInhoud().setInhoud(file.getBytes());
 			String xml = XMLMessageBuilder.getInstance(AfleverBericht.class).handle(afleverBericht);
 			result.add(new EbMSDataSource("afleverbericht.xml","application/xml",xml.getBytes()));
 		}
@@ -92,25 +90,8 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbende.feedback",new TextField<String>("rolBelanghebbende").setLabel(new ResourceModel("lbl.rolBelanghebbende")).setRequired(true)));
 			add(new IdentiteitFormPanel("identiteitOntvanger",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitOntvanger")));
 			add(new BootstrapFormComponentFeedbackBorder("rolOntvanger.feedback",new TextField<String>("rolOntvanger").setLabel(new ResourceModel("lbl.rolOntvanger"))));
-
-			TextField<String> mimeType = new TextField<String>("berichtInhoud.mimeType");
-			mimeType.setLabel(new ResourceModel("lbl.mimeType"));
-			mimeType.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("mimeType.feedback",mimeType));
-
-			TextField<String> bestandsnaam = new TextField<String>("berichtInhoud.bestandsnaam");
-			bestandsnaam.setLabel(new ResourceModel("lbl.bestandsnaam"));
-			bestandsnaam.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("bestandsnaam.feedback",bestandsnaam));
-
-			FileUploadField inhoud = new FileUploadField("file");
-			inhoud.setLabel(new ResourceModel("lbl.inhoud"));
-			inhoud.setRequired(true);
-			add(new BootstrapFormComponentFeedbackBorder("inhoud.feedback",inhoud));
-
+			add(new BerichtInhoudPanel("berichtInhoud",new PropertyModel<BerichtInhoudType>(getModelObject(),"berichtInhoud")));
 			add(new BerichtBijlagenPanel("berichtBijlagen",getModelObject().getBerichtBijlagen()));
-			//BerichtBijlagenType berichtBijlagen;
-			//FoutLijstType foutLijst;
 		}
 
 	}
@@ -123,6 +104,7 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 		public AfleverBerichtModel()
 		{
 			tijdstempelAangeleverd = new Date();
+			berichtInhoud = new BerichtInhoudType();
 			berichtBijlagen = new BerichtBijlagenType();
 		}
 

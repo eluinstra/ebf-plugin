@@ -79,7 +79,7 @@ public class BerichtBijlagenPanel extends Panel
 	{
 		private static final long serialVersionUID = 1L;
 
-		public BerichtBijlagenForm(String id, final BerichtBijlagenType berichtBijlagen)
+		public BerichtBijlagenForm(String id, BerichtBijlagenType berichtBijlagen)
 		{
 			super(id,new CompoundPropertyModel<BerichtInhoudenModel>(new BerichtInhoudenModel(berichtBijlagen)));
 			add(new BerichtBijlageListView("berichtBijlagen.bijlage",BerichtBijlagenForm.this));
