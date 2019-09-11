@@ -32,7 +32,7 @@ import org.apache.wicket.model.ResourceModel;
 public class BerichtInhoudPanel extends Panel
 {
 	private static final long serialVersionUID = 1L;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected transient Log logger = LogFactory.getLog(this.getClass());
 
 	public BerichtInhoudPanel(String id, IModel<BerichtInhoudType> model)
 	{
@@ -46,7 +46,7 @@ public class BerichtInhoudPanel extends Panel
 
 		public BerichtInhoudForm(String id, IModel<BerichtInhoudType> model)
 		{
-			super(id,new CompoundPropertyModel<BerichtInhoudType>(model));
+			super(id,new CompoundPropertyModel<>(model));
 			add(new Label("bestandsnaam"));
 			add(new Label("mimeType"));
 			add(new AjaxButton("remove",new ResourceModel("cmd.remove"),BerichtInhoudForm.this)
@@ -56,11 +56,11 @@ public class BerichtInhoudPanel extends Panel
 				@Override
 				public boolean isVisible()
 				{
-					return BerichtInhoudForm.this.getModelObject() != null && BerichtInhoudForm.this.getModelObject().getBestandsnaam() != null;
+					return BerichtInhoudForm.this.getModelObject() != null;
 				}
 
 				@Override
-				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+				protected void onSubmit(AjaxRequestTarget target)
 				{
 					BerichtInhoudForm.this.setModelObject(null);
 					target.add(BerichtInhoudForm.this);
@@ -92,11 +92,11 @@ public class BerichtInhoudPanel extends Panel
 				@Override
 				public boolean isVisible()
 				{
-					return BerichtInhoudForm.this.getModelObject() == null || BerichtInhoudForm.this.getModelObject().getBestandsnaam() == null;
+					return BerichtInhoudForm.this.getModelObject() == null;
 				}
 
 				@Override
-				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+				protected void onSubmit(AjaxRequestTarget target)
 				{
 					berichtInhoudModalWindow.show(target);
 				}

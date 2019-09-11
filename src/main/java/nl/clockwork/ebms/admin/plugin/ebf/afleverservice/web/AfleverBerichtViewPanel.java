@@ -19,26 +19,25 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import nl.clockwork.ebms.admin.dao.EbMSDAO;
-import nl.clockwork.ebms.admin.model.EbMSAttachment;
-import nl.clockwork.ebms.common.XMLMessageBuilder;
-import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.IGenericComponent;
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.datetime.StyleDateConverter;
+import org.wicketstuff.datetime.markup.html.basic.DateLabel;
 
-public class AfleverBerichtViewPanel extends Panel implements IGenericComponent<AfleverBericht>
+import nl.clockwork.ebms.admin.dao.EbMSDAO;
+import nl.clockwork.ebms.admin.model.EbMSAttachment;
+import nl.clockwork.ebms.common.JAXBParser;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
+
+public class AfleverBerichtViewPanel extends Panel implements IGenericComponent<AfleverBericht,AfleverBerichtViewPanel>
 {
 	private static final long serialVersionUID = 1L;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected transient Log logger = LogFactory.getLog(this.getClass());
 	@SpringBean(name="ebMSAdminDAO")
 	private EbMSDAO ebMSDAO;
 
@@ -47,7 +46,7 @@ public class AfleverBerichtViewPanel extends Panel implements IGenericComponent<
 		super(id);
 		EbMSAttachment attachment = attachments.get(0);
 		attachment = ebMSDAO.findAttachment(attachment.getMessage().getMessageId(),attachment.getMessage().getMessageNr(),attachment.getContentId());
-		setModel(new CompoundPropertyModel<AfleverBericht>(XMLMessageBuilder.getInstance(AfleverBericht.class).handle(new String(attachment.getContent()))));
+		setModel(new CompoundPropertyModel<>(JAXBParser.getInstance(AfleverBericht.class).handle(new String(attachment.getContent()))));
 		add(new Label("kenmerk"));
 		add(new Label("berichtsoort"));
 		add(new Label("berichtkenmerk"));
@@ -61,31 +60,6 @@ public class AfleverBerichtViewPanel extends Panel implements IGenericComponent<
 		add(new Label("rolOntvanger"));
 		add(new Label("berichtInhoud.mimeType"));
 		add(new Label("berichtInhoud.bestandsnaam"));
-	}
-
-	@Override
-	public AfleverBericht getModelObject()
-	{
-		return (AfleverBericht)getDefaultModelObject();
-	}
-
-	@Override
-	public void setModelObject(AfleverBericht object)
-	{
-		setDefaultModelObject(object);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public IModel<AfleverBericht> getModel()
-	{
-		return (IModel<AfleverBericht>)getDefaultModel();
-	}
-
-	@Override
-	public void setModel(IModel<AfleverBericht> model)
-	{
-		setDefaultModel(model);
 	}
 
 }

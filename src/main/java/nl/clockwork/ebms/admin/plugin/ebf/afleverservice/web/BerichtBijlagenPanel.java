@@ -50,7 +50,7 @@ public class BerichtBijlagenPanel extends Panel
 		@Override
 		protected void populateItem(final ListItem<BerichtInhoudType> item)
 		{
-			item.setModel(new CompoundPropertyModel<BerichtInhoudType>(item.getModelObject()));
+			item.setModel(new CompoundPropertyModel<>(item.getModelObject()));
 			item.add(new Label("bestandsnaam"));
 			item.add(new Label("mimeType"));
 			item.add(new AjaxButton("remove",new ResourceModel("cmd.remove"),berichtBijlagenForm)
@@ -58,7 +58,7 @@ public class BerichtBijlagenPanel extends Panel
 				private static final long serialVersionUID = 1L;
 				
 				@Override
-				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+				protected void onSubmit(AjaxRequestTarget target)
 				{
 					berichtBijlagenForm.getModelObject().getBerichtBijlagen().getBijlage().remove(item.getModelObject());
 					target.add(berichtBijlagenForm);
@@ -67,7 +67,7 @@ public class BerichtBijlagenPanel extends Panel
 		}
 	}
 	private static final long serialVersionUID = 1L;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected transient Log logger = LogFactory.getLog(this.getClass());
 
 	public BerichtBijlagenPanel(String id, BerichtBijlagenType berichtBijlagen)
 	{
@@ -81,7 +81,7 @@ public class BerichtBijlagenPanel extends Panel
 
 		public BerichtBijlagenForm(String id, BerichtBijlagenType berichtBijlagen)
 		{
-			super(id,new CompoundPropertyModel<BerichtInhoudenModel>(new BerichtInhoudenModel(berichtBijlagen)));
+			super(id,new CompoundPropertyModel<>(new BerichtInhoudenModel(berichtBijlagen)));
 			add(new BerichtBijlageListView("berichtBijlagen.bijlage",BerichtBijlagenForm.this));
 			final ModalWindow berichtInhoudModalWindow = new BerichtInhoudModalWindow("berichtInhoudModelWindow",BerichtBijlagenForm.this)
 			{
@@ -104,7 +104,7 @@ public class BerichtBijlagenPanel extends Panel
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+				protected void onSubmit(AjaxRequestTarget target)
 				{
 					berichtInhoudModalWindow.show(target);
 				}

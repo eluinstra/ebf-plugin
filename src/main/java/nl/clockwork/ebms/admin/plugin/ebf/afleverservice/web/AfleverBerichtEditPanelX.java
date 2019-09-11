@@ -21,17 +21,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker;
-import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker.Type;
-import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
-import nl.clockwork.ebms.admin.web.service.message.DataSourcesPanel;
-import nl.clockwork.ebms.common.XMLMessageBuilder;
-import nl.clockwork.ebms.model.EbMSDataSource;
-import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
-import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtBijlagenType;
-import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtInhoudType;
-import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.basic.Label;
@@ -42,10 +31,20 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
+import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker;
+import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker.Type;
+import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
+import nl.clockwork.ebms.admin.web.service.message.DataSourcesPanel;
+import nl.clockwork.ebms.common.JAXBParser;
+import nl.clockwork.ebms.model.EbMSDataSource;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtBijlagenType;
+import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtInhoudType;
+
 public class AfleverBerichtEditPanelX extends DataSourcesPanel
 {
 	private static final long serialVersionUID = 1L;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected transient Log logger = LogFactory.getLog(this.getClass());
 
 	public AfleverBerichtEditPanelX(String id)
 	{
@@ -57,11 +56,11 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 	@Override
 	public List<EbMSDataSource> getDataSources()
 	{
-		ArrayList<EbMSDataSource> result = new ArrayList<EbMSDataSource>();
+		ArrayList<EbMSDataSource> result = new ArrayList<>();
 		try
 		{
 			AfleverBerichtModel afleverBericht = ((AfleverBerichtForm)get("form")).getModelObject();
-			String xml = XMLMessageBuilder.getInstance(AfleverBericht.class).handle(afleverBericht);
+			String xml = JAXBParser.getInstance(AfleverBericht.class).handle(afleverBericht);
 			result.add(new EbMSDataSource("afleverbericht.xml","application/xml",xml.getBytes()));
 		}
 		catch (JAXBException e)
@@ -78,7 +77,7 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 		
 		public AfleverBerichtForm(String id)
 		{
-			super(id,new CompoundPropertyModel<AfleverBerichtModel>(new AfleverBerichtModel()));
+			super(id,new CompoundPropertyModel<>(new AfleverBerichtModel()));
 			setMultiPart(true);
 
 			add(new BootstrapFormComponentFeedbackBorder("kenmerk.feedback",new TextField<String>("kenmerk").setLabel(new ResourceModel("lbl.kenmerk")).setRequired(true)));
@@ -86,11 +85,11 @@ public class AfleverBerichtEditPanelX extends DataSourcesPanel
 			add(new BootstrapFormComponentFeedbackBorder("berichtkenmerk.feedback",new TextField<String>("berichtkenmerk").setLabel(new ResourceModel("lbl.berichtkenmerk")).setRequired(true)));
 			add(new BootstrapFormComponentFeedbackBorder("aanleverkenmerk.feedback",new TextField<String>("aanleverkenmerk").setLabel(new ResourceModel("lbl.aanleverkenmerk"))));
 			add(new BootstrapFormComponentFeedbackBorder("tijdstempelAangeleverd.feedback",new BootstrapDateTimePicker("tijdstempelAangeleverd","dd-MM-yyyy hh:mm:ss",Type.DATE_TIME).setLabel(new ResourceModel("lbl.tijdstempelAangeleverd")).setRequired(true)));
-			add(new IdentiteitFormPanel("identiteitBelanghebbende",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitBelanghebbende")).setRequired(true));
+			add(new IdentiteitFormPanel("identiteitBelanghebbende",new PropertyModel<>(getModelObject(),"identiteitBelanghebbende")).setRequired(true));
 			add(new BootstrapFormComponentFeedbackBorder("rolBelanghebbende.feedback",new TextField<String>("rolBelanghebbende").setLabel(new ResourceModel("lbl.rolBelanghebbende")).setRequired(true)));
-			add(new IdentiteitFormPanel("identiteitOntvanger",new PropertyModel<IdentiteitType>(getModelObject(),"identiteitOntvanger")));
+			add(new IdentiteitFormPanel("identiteitOntvanger",new PropertyModel<>(getModelObject(),"identiteitOntvanger")));
 			add(new BootstrapFormComponentFeedbackBorder("rolOntvanger.feedback",new TextField<String>("rolOntvanger").setLabel(new ResourceModel("lbl.rolOntvanger"))));
-			add(new BerichtInhoudPanel("berichtInhoud",new PropertyModel<BerichtInhoudType>(getModelObject(),"berichtInhoud")));
+			add(new BerichtInhoudPanel("berichtInhoud",new PropertyModel<>(getModelObject(),"berichtInhoud")));
 			add(new BerichtBijlagenPanel("berichtBijlagen",getModelObject().getBerichtBijlagen()));
 		}
 

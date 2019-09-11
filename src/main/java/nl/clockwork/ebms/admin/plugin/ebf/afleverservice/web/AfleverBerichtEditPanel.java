@@ -26,11 +26,11 @@ import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker;
 import nl.clockwork.ebms.admin.web.BootstrapDateTimePicker.Type;
 import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
 import nl.clockwork.ebms.admin.web.service.message.DataSourcesPanel;
-import nl.clockwork.ebms.common.XMLMessageBuilder;
+import nl.clockwork.ebms.common.JAXBParser;
 import nl.clockwork.ebms.model.EbMSDataSource;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.AfleverBericht;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.basic.Label;
@@ -49,7 +49,7 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 		BSN,KvK,BTW,Fi,OIN;
 	}
 	private static final long serialVersionUID = 1L;
-	protected Log logger = LogFactory.getLog(this.getClass());
+	protected transient Log logger = LogFactory.getLog(this.getClass());
 
 	public AfleverBerichtEditPanel(String id)
 	{
@@ -61,13 +61,12 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 	@Override
 	public List<EbMSDataSource> getDataSources()
 	{
-		ArrayList<EbMSDataSource> result = new ArrayList<EbMSDataSource>();
+		ArrayList<EbMSDataSource> result = new ArrayList<>();
 		try
 		{
 			AfleverBerichtModel afleverBericht = ((AfleverBerichtForm)get("form")).getModelObject();
-			for (FileUpload file : afleverBericht.getFile())
-				afleverBericht.getBerichtInhoud().setInhoud(file.getBytes());
-			String xml = XMLMessageBuilder.getInstance(AfleverBericht.class).handle(afleverBericht);
+			afleverBericht.getFile().forEach(f -> afleverBericht.getBerichtInhoud().setInhoud(f.getBytes()));
+			String xml = JAXBParser.getInstance(AfleverBericht.class).handle(afleverBericht);
 			result.add(new EbMSDataSource("afleverbericht.xml","application/xml",xml.getBytes()));
 		}
 		catch (JAXBException e)
@@ -84,7 +83,7 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 		
 		public AfleverBerichtForm(String id)
 		{
-			super(id,new CompoundPropertyModel<AfleverBerichtModel>(new AfleverBerichtModel()));
+			super(id,new CompoundPropertyModel<>(new AfleverBerichtModel()));
 			setMultiPart(true);
 
 			add(new BootstrapFormComponentFeedbackBorder("kenmerk.feedback",new TextField<String>("kenmerk").setLabel(new ResourceModel("lbl.kenmerk")).setRequired(true)));
@@ -95,7 +94,7 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 
 			add(new BootstrapFormComponentFeedbackBorder("identiteitBelanghebbende.nummer.feedback",new TextField<String>("identiteitBelanghebbende.nummer").setLabel(new ResourceModel("lbl.identiteitBelanghebbende.nummer")).setRequired(true)));
 
-			DropDownChoice<IdentiteitType> identiteitBelanghebbendeType = new DropDownChoice<IdentiteitType>("identiteitBelanghebbende.type",Arrays.asList(IdentiteitType.values()));
+			DropDownChoice<IdentiteitType> identiteitBelanghebbendeType = new DropDownChoice<>("identiteitBelanghebbende.type",Arrays.asList(IdentiteitType.values()));
 			identiteitBelanghebbendeType.setLabel(new ResourceModel("lbl.identiteitBelanghebbende.type"));
 			identiteitBelanghebbendeType.setRequired(true);
 			identiteitBelanghebbendeType.setNullValid(false);
@@ -140,12 +139,12 @@ public class AfleverBerichtEditPanel extends DataSourcesPanel
 
 			add(new BootstrapFormComponentFeedbackBorder("rolOntvanger.feedback",new TextField<String>("rolOntvanger").setLabel(new ResourceModel("lbl.rolOntvanger"))));
 
-			TextField<String> mimeType = new TextField<String>("berichtInhoud.mimeType");
+			TextField<String> mimeType = new TextField<>("berichtInhoud.mimeType");
 			mimeType.setLabel(new ResourceModel("lbl.berichtInhoud.mimeType"));
 			mimeType.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("mimeType.feedback",mimeType));
 
-			TextField<String> bestandsnaam = new TextField<String>("berichtInhoud.bestandsnaam");
+			TextField<String> bestandsnaam = new TextField<>("berichtInhoud.bestandsnaam");
 			bestandsnaam.setLabel(new ResourceModel("lbl.berichtInhoud.bestandsnaam"));
 			bestandsnaam.setRequired(true);
 			add(new BootstrapFormComponentFeedbackBorder("bestandsnaam.feedback",bestandsnaam));

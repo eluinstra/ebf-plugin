@@ -5,7 +5,7 @@ import java.util.Arrays;
 import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.IdentiteitType;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
 import org.apache.wicket.markup.html.form.TextField;
@@ -69,7 +69,7 @@ public class IdentiteitFormPanel extends FormComponentPanel<IdentiteitType>
 	}
 
 	@Override
-	protected void convertInput()
+	public void convertInput()
 	{
 		if (nummer.getConvertedInput() != null || type.getConvertedInput() != null)
 		{

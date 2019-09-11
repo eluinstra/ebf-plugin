@@ -22,7 +22,7 @@ import nl.clockwork.ebms.admin.web.BootstrapFormComponentFeedbackBorder;
 import nl.clockwork.ebms.admin.web.Utils;
 import nl.logius.digipoort.ebms._2_0.afleverservice._1.BerichtInhoudType;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Component;
@@ -89,7 +89,7 @@ public abstract class BerichtInhoudModalWindow extends ModalWindow
 	public abstract class BerichtInhoudPanel extends Panel
 	{
 		private static final long serialVersionUID = 1L;
-		protected Log logger = LogFactory.getLog(this.getClass());
+		protected transient Log logger = LogFactory.getLog(this.getClass());
 
 		public BerichtInhoudPanel(String id)
 		{
@@ -107,7 +107,7 @@ public abstract class BerichtInhoudModalWindow extends ModalWindow
 
 			public BerichtInhoudForm(String id)
 			{
-				super(id,new CompoundPropertyModel<BerichtInhoudModel>(new BerichtInhoudModel()));
+				super(id,new CompoundPropertyModel<>(new BerichtInhoudModel()));
 				add(new BootstrapFeedbackPanel("feedback"));
 				add(new BootstrapFormComponentFeedbackBorder("file.feedback",createFileField("file")));
 				add(new TextField<String>("bestandsnaam").setLabel(new ResourceModel("lbl.bestandsnaam")));
@@ -131,17 +131,10 @@ public abstract class BerichtInhoudModalWindow extends ModalWindow
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+					protected void onSubmit(AjaxRequestTarget target)
 					{
 						BerichtInhoudModel model = BerichtInhoudForm.this.getModelObject();
-						for (FileUpload file : model.getFile())
-						{
-							BerichtInhoudType berichtInhoud = new BerichtInhoudType();
-							berichtInhoud.setBestandsnaam(StringUtils.isBlank(model.getBestandsnaam()) ? file.getClientFileName() : model.getBestandsnaam());
-							berichtInhoud.setMimeType(StringUtils.isBlank(model.getMimeType()) ? Utils.getContentType(file.getClientFileName()) : model.getMimeType());
-							berichtInhoud.setInhoud(file.getBytes());
-							addBerichtInhoud(berichtInhoud);
-						}
+						model.getFile().forEach(f -> addBerichtInhoud(createBerichtInhoud(model,f)));
 						if (target != null)
 						{
 							target.add(getComponents());
@@ -149,13 +142,22 @@ public abstract class BerichtInhoudModalWindow extends ModalWindow
 						}
 					}
 
-					@Override
-					protected void onError(AjaxRequestTarget target, Form<?> form)
+					private BerichtInhoudType createBerichtInhoud(BerichtInhoudModel model, FileUpload fileUpload)
 					{
-						super.onError(target,form);
+						BerichtInhoudType berichtInhoud = new BerichtInhoudType();
+						berichtInhoud.setBestandsnaam(StringUtils.isBlank(model.getBestandsnaam()) ? fileUpload.getClientFileName() : model.getBestandsnaam());
+						berichtInhoud.setMimeType(StringUtils.isBlank(model.getMimeType()) ? Utils.getContentType(fileUpload.getClientFileName()) : model.getMimeType());
+						berichtInhoud.setInhoud(fileUpload.getBytes());
+						return berichtInhoud;
+					}
+
+					@Override
+					protected void onError(AjaxRequestTarget target)
+					{
+						super.onError(target);
 						if (target != null)
 						{
-							target.add(form);
+							target.add(BerichtInhoudForm.this);
 						}
 					}
 				};
@@ -169,7 +171,7 @@ public abstract class BerichtInhoudModalWindow extends ModalWindow
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+					protected void onSubmit(AjaxRequestTarget target)
 					{
 						getWindow().close(target);
 					}

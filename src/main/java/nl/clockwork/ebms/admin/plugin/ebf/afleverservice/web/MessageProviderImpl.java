@@ -18,7 +18,7 @@ public class MessageProviderImpl extends MessageProvider
 	@Override
 	public List<MessageViewPanel> getMessageViewPanels()
 	{
-		List<MessageViewPanel> result = new ArrayList<MessageViewPanel>();
+		List<MessageViewPanel> result = new ArrayList<>();
 		result.add(new MessageViewPanel(Constants.AfleverService,Constants.AfleverAction)
 		{
 			@Override
@@ -33,7 +33,7 @@ public class MessageProviderImpl extends MessageProvider
 	@Override
 	public List<MessageEditPanel> getMessageEditPanels()
 	{
-		List<MessageEditPanel> result = new ArrayList<MessageEditPanel>();
+		List<MessageEditPanel> result = new ArrayList<>();
 		result.add(new MessageEditPanel(Constants.AfleverService,Constants.AfleverAction)
 		{
 			@Override
